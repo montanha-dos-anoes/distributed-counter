@@ -18,8 +18,8 @@ router.get('/counter', (req, res, next) => {
 });
 
 router.put('/counter', (req, res, next) => {
-  try {
-    const result = counterService.increment();
+  try {    
+    counterService.increment();
 
     return res.status(200).send({
       data: null,

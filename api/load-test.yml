@@ -1,0 +1,22 @@
+config:  
+  target: http://127.0.0.1:3333
+  phases:   
+    - duration: 10
+      arrivalRate: 250
+      name: Spike phase  
+  plugins:
+    ensure: {}
+    apdex: {}
+    metrics-by-endpoint: {}
+  apdex:
+    threshold: 200
+  ensure:
+      thresholds:
+        # - http.response_time.p99: 500
+        - http.response_time.p50: 200 
+scenarios:
+  - flow:      
+        - get:
+            url: "/counter"
+            name: "Increment Counter"
+        
