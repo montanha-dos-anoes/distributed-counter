@@ -14,3 +14,8 @@ sudo docker run --name nginx-load-balancer --network my_network -p 8080:80 -v /h
 
 ## Testes com Apache Bench
  ab -m PUT -n 1000 -c 5 http://192.168.100.5:3333/counter
+
+
+ ## Docker postgres
+
+ docker run -d --name postgresCounter -p 5432:5432 -e POSTGRES_PASSWORD=pass123 postgres

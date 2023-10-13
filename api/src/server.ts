@@ -3,7 +3,8 @@ import cors from 'cors';
 import compression from 'compression';
 import router from './routes';
 import morgan from 'morgan';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
+import { PrismaClient } from '@prisma/client';
 
 dotenv.config();
 
@@ -16,20 +17,28 @@ app.use(morgan('short'));
 
 app.use(router);
 
-
-function main(){
+function main() {
   const PORT = process.env.PORT || 3333;
   const processId = process.pid;
-  
+
   app.listen(PORT, () => {
     console.log(`[server] ${processId} > app listen on port: ${PORT}`);
   });
 
+  // const prisma = new PrismaClient();
+
+  // prisma.counter.create({
+  //   data: {
+  //     value: 1,
+  //   },
+  // }).then(() => {
+  //   console.log('deu bom');
+    
+  // });
 }
 
-if(process.env.SINGLE_MODE){
+if (process.env.SINGLE_MODE) {
   main();
 }
 
 export default main;
-
