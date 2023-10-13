@@ -1,14 +1,15 @@
 import cluster from 'cluster';
 import os from 'os';
-import app from './server';
+import runApp from './server';
+
 
 if (cluster.isPrimary) {
-  const number_of_cpus = os.cpus().length;
+  const number_of_cpus = Math.floor(os.cpus().length / 2);
 
   console.log(`Master ${process.pid} is running`);
   console.log(`Forking Server for ${number_of_cpus} CPUs\n`); // Create a Worker Process for each Available CPU
 
-  for (let index = 0; index <= number_of_cpus; index++) {
+  for (let index = 0; index < number_of_cpus; index++) {
     cluster.fork();
   } // When Worker process has died, Log the worker
 
@@ -20,8 +21,6 @@ if (cluster.isPrimary) {
   // worker starts server for individual cpus
   // the worker created above is starting server
 
-  const PORT = process.env.PORT || 3333;
-  app.listen(PORT, () => {
-    console.log(`[server] > app listen on port: ${PORT}`);
-  });
+  runApp();
+  
 }

@@ -4,7 +4,7 @@ import counterService from '../services/CounterService';
 
 const router = Router();
 
-router.get('/counter', (req, res, next) => {
+router.get('/counter', (req, res, next) => {  
   try {
     const result = counterService.getCounter();
 
