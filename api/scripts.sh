@@ -10,3 +10,7 @@ sudo docker run --name nginx-load-balancer --network my_network -p 8080:80 -v /h
 
 # http://192.168.100.5:3333/  # notebook
 # http://192.168.100.63:3333/  # PCZao
+
+
+## Testes com Apache Bench
+ ab -m PUT -n 1000 -c 5 http://192.168.100.5:3333/counter
