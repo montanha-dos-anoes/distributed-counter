@@ -1,12 +1,15 @@
 import { Router } from 'express';
 import { handleError } from '../helpers/handlerError';
-import counterService from '../services/CounterService';
+import inMemoryRepository from '../repository/InMemoryRepository';
+import CounterService from '../services/CounterService';
+import { PostgresCounterRepository } from '../repository/PostgresCounterRepository';
 
 const router = Router();
+const counterService = new CounterService(inMemoryRepository);
 
-router.get('/counter', (req, res, next) => {  
+router.get('/counter', async (req, res, next) => {
   try {
-    const result = counterService.getCounter();
+    const result = await counterService.getCounter();
 
     return res.status(200).send({
       data: result,
@@ -17,9 +20,9 @@ router.get('/counter', (req, res, next) => {
   }
 });
 
-router.put('/counter', (req, res, next) => {
-  try {    
-    counterService.increment();
+router.put('/counter', async (req, res, next) => {
+  try {
+    await counterService.increment();
 
     return res.status(200).send({
       data: null,

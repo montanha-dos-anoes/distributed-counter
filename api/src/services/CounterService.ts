@@ -1,22 +1,15 @@
-class Counter {
-  constructor(readonly value: number, readonly updated_at: Date) {}
-}
+import { CounterRepository } from '../repository/CounterRepository';
 
 class CounterService {
-  counter: Counter;
+  constructor(private readonly repository: CounterRepository) {}
 
-  constructor() {
-    this.counter = new Counter(0, new Date());
+  async getCounter() {
+    return this.repository.getCounter();
   }
 
-  getCounter() {
-    return this.counter;
-  }
-
-  increment() {
-    const newCounter = new Counter(this.counter.value + 1, new Date());
-    this.counter = newCounter;
+  async increment() {
+    this.repository.increment();
   }
 }
 
-export default new CounterService();
+export default CounterService;
