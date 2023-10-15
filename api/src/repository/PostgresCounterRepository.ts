@@ -22,13 +22,14 @@ export class PostgresCounterRepository implements CounterRepository {
           value: 1,
         },
       });
-    }else {
-      // await this.prismaClient.counter.update({
-      //   data: {
-      //     id: counter.id,
-      //     value: counter.value + 1,
-      //   },
-      // });
+    } else {
+      await this.prismaClient.counter.update({
+        where: { id: counter.id },
+        data: {
+          id: counter.id,
+          value: counter.value + 1,
+        },
+      });
     }
   }
 }
