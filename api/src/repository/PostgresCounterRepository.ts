@@ -6,7 +6,7 @@ export class PostgresCounterRepository implements CounterRepository {
   prismaClient: PrismaClient;
 
   constructor() {
-    this.prismaClient = new PrismaClient();
+    this.prismaClient = new PrismaClient({ log: ['error', 'info'] });
   }
 
   async getCounter(): Promise<Counter> {
@@ -26,7 +26,6 @@ export class PostgresCounterRepository implements CounterRepository {
       await this.prismaClient.counter.update({
         where: { id: counter.id },
         data: {
-          id: counter.id,
           value: counter.value + 1,
         },
       });

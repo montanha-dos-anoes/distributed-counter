@@ -4,11 +4,11 @@ class CounterService {
   constructor(private readonly repository: CounterRepository) {}
 
   async getCounter() {
-    return this.repository.getCounter();
+    return await this.repository.getCounter();
   }
 
   async increment() {
-    this.repository.increment();
+    await this.repository.increment();
   }
 }
 

@@ -24,17 +24,6 @@ function main() {
   app.listen(PORT, () => {
     console.log(`[server] ${processId} > app listen on port: ${PORT}`);
   });
-
-  // const prisma = new PrismaClient();
-
-  // prisma.counter.create({
-  //   data: {
-  //     value: 1,
-  //   },
-  // }).then(() => {
-  //   console.log('deu bom');
-    
-  // });
 }
 
 if (process.env.SINGLE_MODE) {

@@ -5,7 +5,7 @@ import CounterService from '../services/CounterService';
 import { PostgresCounterRepository } from '../repository/PostgresCounterRepository';
 
 const router = Router();
-const counterService = new CounterService(inMemoryRepository);
+const counterService = new CounterService(new PostgresCounterRepository());
 
 router.get('/counter', async (req, res, next) => {
   try {
