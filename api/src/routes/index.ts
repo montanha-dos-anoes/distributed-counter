@@ -1,11 +1,10 @@
 import { Router } from 'express';
 import { handleError } from '../helpers/handlerError';
-import inMemoryRepository from '../repository/InMemoryRepository';
+import { MongoDBRepository } from '../repository/MongoDBCounterRepository';
 import CounterService from '../services/CounterService';
-import { PostgresCounterRepository } from '../repository/PostgresCounterRepository';
 
 const router = Router();
-const counterService = new CounterService(new PostgresCounterRepository());
+const counterService = new CounterService(new MongoDBRepository());
 
 router.get('/counter', async (req, res, next) => {
   try {
