@@ -2,9 +2,10 @@ import { Router } from 'express';
 import { handleError } from '../helpers/handlerError';
 import { MongoDBRepository } from '../repository/MongoDBCounterRepository';
 import CounterService from '../services/CounterService';
+import { RedisRepository } from '../repository/RedisRepository';
 
 const router = Router();
-const counterService = new CounterService(new MongoDBRepository());
+const counterService = new CounterService(new RedisRepository());
 
 router.get('/counter', async (req, res, next) => {
   try {
