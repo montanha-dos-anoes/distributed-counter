@@ -24,13 +24,19 @@ export class MongoDBRepository implements CounterRepository {
         updatedAt: new Date(),
       });
     } else {
-      await counterModel.updateOne(
+      // console.log('countervalue:', counter.value + 1);
+      
+      const result = await counterModel.updateOne(
         { _id: counter._id },
         {
           value: counter.value + 1,
           updatedAt: new Date(),
         },
       );
+
+      if(result.modifiedCount == 0){
+        throw new Error("Not updated");
+      }
     }
   }
 }
