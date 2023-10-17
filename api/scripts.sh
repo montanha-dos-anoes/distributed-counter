@@ -17,5 +17,10 @@ sudo docker run --name nginx-load-balancer --network my_network -p 8080:80 -v /h
 
 
  ## Docker postgres
+ docker run -d --name postgresCounter -p 5432:5432 -e POSTGRES_PASSWORD=pass123 postgres 
 
- docker run -d --name postgresCounter -p 5432:5432 -e POSTGRES_PASSWORD=pass123 postgres
+ ## Docker mongodb
+ docker run --name mongodb -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=balta -e MONGO_INITDB_ROOT_PASSWORD=e296cd9f mongo
+
+ ## Docker redis
+ docker run -d --name mongodb -p 6379:6379 -i -t redis
