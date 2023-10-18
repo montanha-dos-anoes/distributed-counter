@@ -33,4 +33,17 @@ router.put('/counter', async (req, res, next) => {
   }
 });
 
+router.delete('/counter', async (req, res, next) => {
+  try {
+    await counterService.resetCounter();
+
+    return res.status(200).send({
+      data: null,
+      message: 'Deu bom!',
+    });
+  } catch (error) {
+    return handleError(error as Error, res);
+  }
+});
+
 export default router;

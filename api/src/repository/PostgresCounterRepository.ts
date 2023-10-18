@@ -31,4 +31,8 @@ export class PostgresCounterRepository implements CounterRepository {
       });
     }
   }
+
+  async resetCounter(): Promise<void> {
+    await this.prismaClient.counter.deleteMany({});
+  }
 }

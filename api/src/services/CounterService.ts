@@ -8,7 +8,11 @@ class CounterService {
   }
 
   async increment() {
-    await this.repository.increment();
+    await this.repository.increment();  
+  }
+
+  async resetCounter(){
+    await this.repository.resetCounter();
   }
 }
 

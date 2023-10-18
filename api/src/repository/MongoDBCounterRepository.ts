@@ -25,7 +25,7 @@ export class MongoDBRepository implements CounterRepository {
       });
     } else {
       // console.log('countervalue:', counter.value + 1);
-      
+
       const result = await counterModel.updateOne(
         { _id: counter._id },
         {
@@ -34,9 +34,13 @@ export class MongoDBRepository implements CounterRepository {
         },
       );
 
-      if(result.modifiedCount == 0){
-        throw new Error("Not updated");
+      if (result.modifiedCount == 0) {
+        throw new Error('Not updated');
       }
     }
+  }
+
+  async resetCounter(): Promise<void> {
+    await counterModel.deleteMany({});
   }
 }
