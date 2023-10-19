@@ -25,12 +25,12 @@ function main() {
     console.log(`[server] ${processId} > app listen on port: ${PORT}`);
   });
 
-  // mongoose
-  //   .connect(process.env.MONGODB_URL || '')
-  //   .then(() => {
-  //     console.log(`[server] > mongodb database conected`);
-  //   })
-  //   .catch((err) => console.log('mongoerror: ', err));
+  mongoose
+    .connect(process.env.MONGODB_URL || '')
+    .then(() => {
+      console.log(`[server] > mongodb database conected`);
+    })
+    .catch((err) => console.log('mongoerror: ', err));
 }
 
 if (process.env.SINGLE_MODE) {

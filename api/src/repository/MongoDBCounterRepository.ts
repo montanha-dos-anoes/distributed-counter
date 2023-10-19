@@ -26,17 +26,12 @@ export class MongoDBRepository implements CounterRepository {
     } else {
       // console.log('countervalue:', counter.value + 1);
 
-      const result = await counterModel.updateOne(
+      await counterModel.findOneAndUpdate(
         { _id: counter._id },
         {
-          value: counter.value + 1,
-          updatedAt: new Date(),
+          $inc: {value : 1}          
         },
       );
-
-      if (result.modifiedCount == 0) {
-        throw new Error('Not updated');
-      }
     }
   }
 
