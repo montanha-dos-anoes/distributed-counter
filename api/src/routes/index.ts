@@ -3,9 +3,10 @@ import { handleError } from '../helpers/handlerError';
 import { MongoDBRepository } from '../repository/MongoDBCounterRepository';
 import CounterService from '../services/CounterService';
 import { RedisRepository } from '../repository/RedisRepository';
+import { PostgresCounterRepository } from '../repository/PostgresCounterRepository';
 
 const router = Router();
-const counterService = new CounterService(new RedisRepository());
+const counterService = new CounterService(new PostgresCounterRepository());
 
 router.get('/counter', async (req, res, next) => {
   try {

@@ -23,12 +23,19 @@ export class PostgresCounterRepository implements CounterRepository {
         },
       });
     } else {
-      await this.prismaClient.counter.update({
-        where: { id: counter.id },
-        data: {
-          value: counter.value + 1,
-        },
-      });
+      // const newValue = counter.value + 1;
+            
+      // await this.prismaClient.counter.update({
+      //   where: { id: counter.id },
+      //   data: {
+      //     value: newValue,
+      //     updatedAt: new Date()
+      //   },       
+      // });
+
+      // Update lidando com concorrencia
+      await this.prismaClient.$executeRaw`UPDATE "Counter" SET value = value + 1 WHERE id = ${counter.id}`;
+
     }
   }
 
