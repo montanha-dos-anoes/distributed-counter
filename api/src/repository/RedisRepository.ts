@@ -9,12 +9,14 @@ export class RedisRepository implements CounterRepository {
 
   constructor() {
     this.redisClient = createClient({
-      url: 'redis://127.0.0.1:6379'
+      url: 'redis://127.0.0.1:6379',
     });
+  }
+
+  async connect(): Promise<void> {
     this.redisClient.connect().then(() => {
-      console.log('[repository] > redis conected');
+      console.log('[database] > redis conected');
     });
-  
     this.redisClient.on('error', (err) => console.log('Redis Client Error', err));
   }
 
@@ -28,6 +30,6 @@ export class RedisRepository implements CounterRepository {
   }
 
   async resetCounter(): Promise<void> {
-      this.redisClient.del(this.COUNTER_KEY);
+    this.redisClient.del(this.COUNTER_KEY);
   }
 }

@@ -8,6 +8,11 @@ class InMemoryRepository implements CounterRepository {
     this.counter = new Counter(0, new Date());
   }
   
+  async connect(): Promise<void> {
+    console.log('[database] > in memory repository');
+  }
+  
+  
   async getCounter(): Promise<Counter> {
     return this.counter;
   }

@@ -25,3 +25,5 @@ docker run -d --name mongodb -it -p 27017:27017  mongo
 ## Docker redis
 docker run -d --name redis -p 6379:6379 -i -t redis
 
+## Exemplo nginx no windows
+docker run --name nginx-load-balancer --network my_network -p 8080:80 -v D:\DEV\Pessoal\distributed-counter\api\nginx.conf:/etc/nginx/nginx.conf nginx

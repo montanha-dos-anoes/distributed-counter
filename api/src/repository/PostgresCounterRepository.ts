@@ -9,6 +9,12 @@ export class PostgresCounterRepository implements CounterRepository {
     this.prismaClient = new PrismaClient({ log: ['error', 'info'] });
   }
 
+  async connect(): Promise<void> {
+    await this.prismaClient.$connect().then(() => {
+      console.log('[database] > postgres conected');
+    });
+  }
+
   async getCounter(): Promise<Counter> {
     const counter = await this.prismaClient.counter.findFirst();
     return new Counter(counter?.value || 0, counter?.updatedAt || new Date());
@@ -24,18 +30,18 @@ export class PostgresCounterRepository implements CounterRepository {
       });
     } else {
       // const newValue = counter.value + 1;
-            
+
       // await this.prismaClient.counter.update({
       //   where: { id: counter.id },
       //   data: {
       //     value: newValue,
       //     updatedAt: new Date()
-      //   },       
+      //   },
       // });
 
       // Update lidando com concorrencia
-      await this.prismaClient.$executeRaw`UPDATE "Counter" SET value = value + 1 WHERE id = ${counter.id}`;
-
+      await this.prismaClient
+        .$executeRaw`UPDATE "Counter" SET value = value + 1 WHERE id = ${counter.id}`;
     }
   }
 

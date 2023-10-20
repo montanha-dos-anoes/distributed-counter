@@ -11,6 +11,16 @@ const counterModel = mongoose.model('counter', CounterSchema);
 
 export class MongoDBRepository implements CounterRepository {
   constructor() {}
+
+  async connect(): Promise<void> {
+    mongoose
+      .connect(process.env.MONGODB_URL || '')
+      .then(() => {
+        console.log(`[database] > mongodb database conected`);
+      })
+      .catch((err) => console.log('mongoerror: ', err));
+  }
+
   async getCounter(): Promise<Counter> {
     const counter = await counterModel.findOne({});
     return new Counter(counter?.value || 0, new Date());
@@ -29,7 +39,7 @@ export class MongoDBRepository implements CounterRepository {
       await counterModel.findOneAndUpdate(
         { _id: counter._id },
         {
-          $inc: {value : 1}          
+          $inc: { value: 1 },
         },
       );
     }
