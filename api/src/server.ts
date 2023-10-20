@@ -6,10 +6,19 @@ import morgan from 'morgan';
 import { RedisRepository } from './repository/RedisRepository';
 import router from './routes';
 import CounterService from './services/CounterService';
+import { Server } from 'socket.io';
+import { WebSocketsService } from './services/WebSocketsService';
 
 dotenv.config();
 
 const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: '*'
+  }
+});
 
 app.use(compression());
 app.use(cors());
@@ -26,12 +35,14 @@ async function main() {
   }
   const processId = process.pid;
 
-  const repository = new RedisRepository();
+  const repository = new RedisRepository(io);
   await repository.connect();
   const counterService = new CounterService(repository);
   app.use(router(counterService));
+  
+  new WebSocketsService(repository, io);
 
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`[server] ${processId} > app listen on port: ${PORT}`);
   });
 }

@@ -1,25 +1,39 @@
 import { useEffect, useState } from 'react';
 import reactLogo from './assets/logo-senhor-aneis.png';
 
+import { io } from 'socket.io-client';
 import './App.css';
 import CounterService from './services/counter.service';
+
+export const socket = io('http://localhost:3333');
+
+socket.on('connect', () => {
+  console.log('conected');
+});
 
 function App() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     getCounter();
+    socket.on('counter-changed', () => {
+      getCounter();
+    });
   }, []); // oninit
 
   const increment = async () => {
-    await new CounterService().incrementCounter();
-    await getCounter();
+    // await new CounterService().incrementCounter();
+    socket.emit('increment');
+    // await getCounter();
   };
 
   const getCounter = async () => {
-    const counter = await new CounterService().getCounter();
-    console.log('chamou!!', counter);
-    setCount(counter.value);
+    try {
+      const counter = await new CounterService().getCounter();
+      setCount(counter.value);
+    } catch (error) {
+      console.log('erro na request');
+    }
   };
 
   return (
